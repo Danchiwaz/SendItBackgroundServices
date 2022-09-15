@@ -6,9 +6,8 @@ import sendMail from "../Helpers/Email";
 export const sendUserRegistrationEmails = async () => {
   let users = await pool.query(`SELECT public.GetAllUsersToSendEmail()`);
 
-  
   users = parseDatabaseData(users, "getalluserstosendemail");
-  if(users){
+  if (users) {
     for (let user of users) {
       ejs.renderFile(
         __dirname + "/../../templates/registration.ejs",
@@ -45,9 +44,9 @@ export const sendEmailParcelSender = async () => {
 
   let senderEmail = await pool.query(
     `SELECT public.GetSenderEmail('Danchiwaz')`
-  );  
+  );
 
-  if(parcels.length > 0){
+  if (parcels.length > 0) {
     await Promise.all(
       parcels.map(async (parcel: any, i: number) => {
         let senderEmail = await pool.query(
@@ -57,7 +56,6 @@ export const sendEmailParcelSender = async () => {
         senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
         const tosenderEmail = senderEmail[0].email;
 
-        // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
         ejs.renderFile(
           __dirname + "/../../templates/send.ejs",
           {
@@ -127,7 +125,6 @@ export const sendEmailParcelSender = async () => {
   // }
 };
 
-
 export const sendEmailParcelReceiver = async () => {
   let parcels = await pool.query(`SELECT public.getAllParcels()`);
 
@@ -146,11 +143,13 @@ export const sendEmailParcelReceiver = async () => {
 
         senderEmail = parseDatabaseData(senderEmail, "getreceiveremail");
         const toreciverEmail = senderEmail[0].email;
-
-        // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
         ejs.renderFile(
           __dirname + "/../../templates/receive.ejs",
-          { sender: parcel.sender, receiver: parcel.receiver, trackingno:parcel.trackingno },
+          {
+            sender: parcel.sender,
+            receiver: parcel.receiver,
+            trackingno: parcel.trackingno,
+          },
           async (error, data) => {
             if (error) {
               console.log(error);

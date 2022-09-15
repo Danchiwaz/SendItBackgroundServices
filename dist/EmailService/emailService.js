@@ -55,7 +55,6 @@ const sendEmailParcelSender = () => __awaiter(void 0, void 0, void 0, function* 
             let senderEmail = yield config_1.default.query(`SELECT public.GetSenderEmail('${parcel.sender}')`);
             senderEmail = (0, helpers_1.parseDatabaseData)(senderEmail, "getsenderemail");
             const tosenderEmail = senderEmail[0].email;
-            // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
             ejs_1.default.renderFile(__dirname + "/../../templates/send.ejs", {
                 sender: parcel.sender,
                 receiver: parcel.receiver,
@@ -124,8 +123,11 @@ const sendEmailParcelReceiver = () => __awaiter(void 0, void 0, void 0, function
             let senderEmail = yield config_1.default.query(`SELECT public.GetReceiverEmail('${parcel.receiver}')`);
             senderEmail = (0, helpers_1.parseDatabaseData)(senderEmail, "getreceiveremail");
             const toreciverEmail = senderEmail[0].email;
-            // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-            ejs_1.default.renderFile(__dirname + "/../../templates/receive.ejs", { sender: parcel.sender, receiver: parcel.receiver, trackingno: parcel.trackingno }, (error, data) => __awaiter(void 0, void 0, void 0, function* () {
+            ejs_1.default.renderFile(__dirname + "/../../templates/receive.ejs", {
+                sender: parcel.sender,
+                receiver: parcel.receiver,
+                trackingno: parcel.trackingno,
+            }, (error, data) => __awaiter(void 0, void 0, void 0, function* () {
                 if (error) {
                     console.log(error);
                     return;
