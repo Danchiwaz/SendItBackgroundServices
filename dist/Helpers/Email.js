@@ -12,17 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const node_cron_1 = __importDefault(require("node-cron"));
-const emailService_1 = require("./EmailService/emailService");
-const app = (0, express_1.default)();
-const run = () => {
-    node_cron_1.default.schedule("*/5 * * * * *", () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("Backgroundservice is running after every 5 sec");
-        yield (0, emailService_1.sendUserRegistrationEmails)();
-    }));
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+function createTransporter(config) {
+    const transporter = nodemailer_1.default.createTransport(config);
+    return transporter;
+}
+let configurations = {
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    requireTLS: false,
+    auth: {
+        user: process.env.EMAIL_SENDER,
+        pass: process.env.EMAIL_PASSWORD,
+    },
 };
-run();
-app.listen(1400, () => {
-    console.log("App is listening to port 1400");
+const sendMail = (messageoption) => __awaiter(void 0, void 0, void 0, function* () {
+    const transporter = yield createTransporter(configurations);
+    yield transporter.verify();
+    yield transporter.sendMail(messageoption, (error, info) => {
+        if (error) {
+            console.log(error);
+        }
+        console.log(info.response);
+    });
 });
+exports.default = sendMail;
