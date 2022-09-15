@@ -18,8 +18,9 @@ const emailService_1 = require("./EmailService/emailService");
 const app = (0, express_1.default)();
 const run = () => {
     node_cron_1.default.schedule("*/5 * * * * *", () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("Backgroundservice is running after every 5 sec");
-        yield (0, emailService_1.sendUserRegistrationEmails)();
+        (0, emailService_1.sendUserRegistrationEmails)();
+        (0, emailService_1.sendEmailParcelSender)();
+        (0, emailService_1.sendEmailParcelReceiver)();
     }));
 };
 run();
