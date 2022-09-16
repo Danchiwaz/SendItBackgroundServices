@@ -81,19 +81,17 @@ $$;
 SELECT public.getAllParcels()
 -- end of function to get all parcels  
 
--- CREATE OR REPLACE FUNCTION GetAllParcels()
--- RETURNS  JSON
--- LANGUAGE SQL
--- AS $$
--- 	select array_to_json(array_agg(row_to_json(u)))
--- 	from(
--- 		SELECT * FROM public.parcels where isDeleted='no' and sent =False
--- 	) u;
--- $$;
-
-
--- SELECT public.getAllParcels()
-
+-- Funtion to get all parcels with status delivered 
+CREATE OR REPLACE FUNCTION GetAllDeliveredParcels()
+RETURNS  JSON
+LANGUAGE SQL
+AS $$
+	select array_to_json(array_agg(row_to_json(u)))
+	from(
+		SELECT * FROM public.parcels where delivered='delivered' and received =true and isDeleted ='no'
+	) u;
+$$;
+-- end of the func to get all parcels with status delivered 
 
 -- Update the status of sent 
 CREATE OR REPLACE PROCEDURE public.IsSentTrue(

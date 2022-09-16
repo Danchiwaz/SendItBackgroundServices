@@ -1,6 +1,8 @@
 import express from "express";
 import cron from "node-cron";
 import {
+  sendEmailParcelDeliveryReceiver,
+  sendEmailParcelDeliverySender,
     sendEmailParcelReceiver,
   sendEmailParcelSender,
   sendUserRegistrationEmails,
@@ -14,6 +16,10 @@ const run = () => {
     sendUserRegistrationEmails();
     sendEmailParcelSender();
     sendEmailParcelReceiver();
+    sendEmailParcelDeliveryReceiver();
+    sendEmailParcelDeliverySender();
+    console.log("=============================================");
+    
   });
 };
 
