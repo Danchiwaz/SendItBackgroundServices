@@ -88,41 +88,7 @@ export const sendEmailParcelSender = async () => {
     );
   }
 
-  // for (let parcel of parcels) {
-
-  //   let senderEmail = await pool.query(`SELECT public.GetSenderEmail('${parcel.sender}')`);
-
-  //   senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   const tosenderEmail = senderEmail[0].email
-
-  //   // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   ejs.renderFile(
-  //     __dirname + "/../../templates/send.ejs",
-  //     { sender: parcel.sender, receiver:parcel.receiver },
-  //     async (error, data) => {
-  //       if (error) {
-  //         console.log(error);
-  //         return;
-  //       }
-  //       let messageoption = {
-  //         from: process.env.EMAIL_SENDER,
-  //         to: tosenderEmail,
-  //         subject: "Registration Successfull",
-  //         html: data,
-  //       };
-
-  //       try {
-  //         await sendMail(messageoption);
-  //         await pool.query(
-  //           `CALL public.IsSentTrue('${parcel.id}')`
-  //         );
-  //         console.log("Email is Sent");
-  //       } catch (error: any) {
-  //         console.log(error.message);
-  //       }
-  //     }
-  //   );
-  // }
+ 
 };
 
 export const sendEmailParcelReceiver = async () => {
@@ -175,41 +141,7 @@ export const sendEmailParcelReceiver = async () => {
     );
   }
 
-  // for (let parcel of parcels) {
 
-  //   let senderEmail = await pool.query(`SELECT public.GetSenderEmail('${parcel.sender}')`);
-
-  //   senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   const tosenderEmail = senderEmail[0].email
-
-  //   // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   ejs.renderFile(
-  //     __dirname + "/../../templates/send.ejs",
-  //     { sender: parcel.sender, receiver:parcel.receiver },
-  //     async (error, data) => {
-  //       if (error) {
-  //         console.log(error);
-  //         return;
-  //       }
-  //       let messageoption = {
-  //         from: process.env.EMAIL_SENDER,
-  //         to: tosenderEmail,
-  //         subject: "Registration Successfull",
-  //         html: data,
-  //       };
-
-  //       try {
-  //         await sendMail(messageoption);
-  //         await pool.query(
-  //           `CALL public.IsSentTrue('${parcel.id}')`
-  //         );
-  //         console.log("Email is Sent");
-  //       } catch (error: any) {
-  //         console.log(error.message);
-  //       }
-  //     }
-  //   );
-  // }
 };
 
 
@@ -254,7 +186,7 @@ export const sendEmailParcelDeliveryReceiver = async () => {
               await sendMail(messageoption);
               await pool.query(`  
              CALL public.UpdateParcelChecker('${parcel.id}')`);
-              
+
             } catch (error: any) {
               console.log(error.message);
             }
@@ -264,41 +196,7 @@ export const sendEmailParcelDeliveryReceiver = async () => {
     );
   }
 
-  // for (let parcel of parcels) {
-
-  //   let senderEmail = await pool.query(`SELECT public.GetSenderEmail('${parcel.sender}')`);
-
-  //   senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   const tosenderEmail = senderEmail[0].email
-
-  //   // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   ejs.renderFile(
-  //     __dirname + "/../../templates/send.ejs",
-  //     { sender: parcel.sender, receiver:parcel.receiver },
-  //     async (error, data) => {
-  //       if (error) {
-  //         console.log(error);
-  //         return;
-  //       }
-  //       let messageoption = {
-  //         from: process.env.EMAIL_SENDER,
-  //         to: tosenderEmail,
-  //         subject: "Registration Successfull",
-  //         html: data,
-  //       };
-
-  //       try {
-  //         await sendMail(messageoption);
-  //         await pool.query(
-  //           `CALL public.IsSentTrue('${parcel.id}')`
-  //         );
-  //         console.log("Email is Sent");
-  //       } catch (error: any) {
-  //         console.log(error.message);
-  //       }
-  //     }
-  //   );
-  // }
+ 
 };
 
 
@@ -355,41 +253,7 @@ export const sendEmailParcelDeliverySender = async () => {
     );
   }
 
-  // for (let parcel of parcels) {
-
-  //   let senderEmail = await pool.query(`SELECT public.GetSenderEmail('${parcel.sender}')`);
-
-  //   senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   const tosenderEmail = senderEmail[0].email
-
-  //   // senderEmail = parseDatabaseData(senderEmail, "getsenderemail");
-  //   ejs.renderFile(
-  //     __dirname + "/../../templates/send.ejs",
-  //     { sender: parcel.sender, receiver:parcel.receiver },
-  //     async (error, data) => {
-  //       if (error) {
-  //         console.log(error);
-  //         return;
-  //       }
-  //       let messageoption = {
-  //         from: process.env.EMAIL_SENDER,
-  //         to: tosenderEmail,
-  //         subject: "Registration Successfull",
-  //         html: data,
-  //       };
-
-  //       try {
-  //         await sendMail(messageoption);
-  //         await pool.query(
-  //           `CALL public.IsSentTrue('${parcel.id}')`
-  //         );
-  //         console.log("Email is Sent");
-  //       } catch (error: any) {
-  //         console.log(error.message);
-  //       }
-  //     }
-  //   );
-  // }
+ 
 };
 
 
