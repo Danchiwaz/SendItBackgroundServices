@@ -42,9 +42,9 @@ export const sendEmailParcelSender = async () => {
 
   parcels = parseDatabaseData(parcels, "getallparcels");
 
-  let senderEmail = await pool.query(
-    `SELECT public.GetSenderEmail('Danchiwaz')`
-  );
+  // let senderEmail = await pool.query(
+  //   `SELECT public.GetSenderEmail('Danchiwaz')`
+  // );
 
   if (parcels.length > 0) {
     await Promise.all(
@@ -87,8 +87,6 @@ export const sendEmailParcelSender = async () => {
       })
     );
   }
-
- 
 };
 
 export const sendEmailParcelReceiver = async () => {
@@ -103,12 +101,12 @@ export const sendEmailParcelReceiver = async () => {
   if (parcels.length > 0) {
     await Promise.all(
       parcels.map(async (parcel: any, i: number) => {
-        let senderEmail = await pool.query(
+        let receiverEmail = await pool.query(
           `SELECT public.GetReceiverEmail('${parcel.receiver}')`
         );
 
-        senderEmail = parseDatabaseData(senderEmail, "getreceiveremail");
-        const toreciverEmail = senderEmail[0].email;
+        receiverEmail = parseDatabaseData(receiverEmail, "getreceiveremail");
+        const toreciverEmail = receiverEmail[0].email;
         ejs.renderFile(
           __dirname + "/../../templates/receive.ejs",
           {
@@ -140,10 +138,7 @@ export const sendEmailParcelReceiver = async () => {
       })
     );
   }
-
-
 };
-
 
 export const sendEmailParcelDeliveryReceiver = async () => {
   let parcels = await pool.query(`SELECT public.GetAllDeliveredParcels()`);
@@ -157,12 +152,14 @@ export const sendEmailParcelDeliveryReceiver = async () => {
   if (parcels.length > 0) {
     await Promise.all(
       parcels.map(async (parcel: any, i: number) => {
-        let senderEmail = await pool.query(
+        let receiverEmail = await pool.query(
           `SELECT public.GetReceiverEmail('${parcel.receiver}')`
         );
 
-        senderEmail = parseDatabaseData(senderEmail, "getreceiveremail");
-        const toreciverEmail = senderEmail[0].email;
+        receiverEmail = parseDatabaseData(receiverEmail, "getreceiveremail");
+        const toreciverEmail = receiverEmail[0].email;
+        console.log(toreciverEmail);
+
         ejs.renderFile(
           __dirname + "/../../templates/receiverConfirm.ejs",
           {
@@ -186,7 +183,6 @@ export const sendEmailParcelDeliveryReceiver = async () => {
               await sendMail(messageoption);
               await pool.query(`  
              CALL public.UpdateParcelChecker('${parcel.id}')`);
-
             } catch (error: any) {
               console.log(error.message);
             }
@@ -195,13 +191,7 @@ export const sendEmailParcelDeliveryReceiver = async () => {
       })
     );
   }
-
- 
 };
-
-
-
-
 
 export const sendEmailParcelDeliverySender = async () => {
   let parcels = await pool.query(`SELECT public.GetAllDeliveredParcels()`);
@@ -252,8 +242,4 @@ export const sendEmailParcelDeliverySender = async () => {
       })
     );
   }
-
- 
 };
-
-
