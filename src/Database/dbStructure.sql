@@ -73,7 +73,7 @@ LANGUAGE SQL
 AS $$
 	select array_to_json(array_agg(row_to_json(u)))
 	from(
-		SELECT * FROM public.parcels where isDeleted='no' and sent =False
+		SELECT * FROM public.parcels where isDeleted='no' and sent = true and checker = 'yes'
 	) u;
 $$;
 
@@ -88,13 +88,13 @@ LANGUAGE SQL
 AS $$
 	select array_to_json(array_agg(row_to_json(u)))
 	from(
-		SELECT * FROM public.parcels where delivered='delivered' and received =true and isDeleted ='no'
+		SELECT * FROM public.parcels where status='delivered' and received =true and isDeleted ='no' and checker =''
 	) u;
 $$;
 -- end of the func to get all parcels with status delivered 
-
+SELECT public.GetAllDeliveredParcels()
 -- Update the status of sent 
-CREATE OR REPLACE PROCEDURE public.IsSentTrue(
+CREATE OR REPLACE PROCEDURE public.IscheckerUpdated(
 	IN theId uuid DEFAULT NULL::uuid
 
 )
@@ -102,7 +102,7 @@ LANGUAGE 'plpgsql'
 AS $BODY$
 BEGIN
 	UPDATE public.parcels
-	SET sent = True WHERE id = theId;
+	SET checker = 'sent' WHERE id = theId;
 END;
 $BODY$
 CALL public.IsSentTrue('74830cdb-059f-462d-be80-367732b0ce0c')

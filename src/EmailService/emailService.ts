@@ -182,7 +182,7 @@ export const sendEmailParcelDeliveryReceiver = async () => {
             try {
               await sendMail(messageoption);
               await pool.query(`  
-             CALL public.UpdateParcelChecker('${parcel.id}')`);
+             CALL public.IscheckerUpdated('${parcel.id}')`);
             } catch (error: any) {
               console.log(error.message);
             }
@@ -233,7 +233,7 @@ export const sendEmailParcelDeliverySender = async () => {
             try {
               await sendMail(messageoption);
               await pool.query(`  
-             CALL public.UpdateParcelChecker('${parcel.id}')`);
+             CALL public.IscheckerUpdated('${parcel.id}')`);
             } catch (error: any) {
               console.log(error.message);
             }
